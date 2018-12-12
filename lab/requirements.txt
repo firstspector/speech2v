@@ -1,0 +1,5 @@
+scipy
+matplotlib==3.0.2
+SpeechRecognition==3.8.1
+audiolazy==0.5
+PyAudio==0.2.11

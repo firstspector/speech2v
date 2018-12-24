@@ -5,6 +5,8 @@ import numpy as np
 import pyaudio
 import sys
 
+from preprocess import *
+
 #############################
 # GUI parameters
 #############################
@@ -134,6 +136,8 @@ if not headless:
         objects_to_return = []
         try:
             incoming = np.fromstring(stream.read(CHUNK), 'Int16')
+            incoming = high_pass_filter(incoming, RATE)
+            incoming = low_pass_filter(incoming, RATE, 8000)
             if timeDomain:
                 newy = list(oldy[CHUNK:])
                 print(type(newy))

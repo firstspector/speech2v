@@ -4,33 +4,29 @@ from spectral_feature import *
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-filename = "test.wav"
+filename = "0100200101.wav"
 
 test = signal(filename)
+test._load_file()
 
-wav = test._read_stream()
-print(np.fromstring(wav, 'Int16'))
+# wav = test._read_stream()
+# print(np.fromstring(wav, 'Int16'))
 # test._save_file(wav)
 
 # test._load_file()
 
 print(len(test.data))
-dat = wav
-
-fig = plt.figure(facecolor='white') 
-axFreq = fig.add_axes([.1, .1, .8, 0.4*(2)])
-axFreq.plot(range(np.int((8*1024)/2)), [0]*(np.int(8*1024/2)))
+dat = test.data
 
 
 # stream = np.fromstring(test.data, 'Int16')
-def update(i):
-    stream = dat[(i+1)*1:(i+1)*441]
+
+
+ms = np.int(20*(test.FS/1000))  
+
+for i in range(int(len(dat)/ms)):
+    stream = dat[np.int(i*ms):np.int((i+1)*ms)]
     windowed = spectral_estimate(stream)
-    return lpc_spectrum(windowed)
-    
-
-
-for i in range(100):
+    lpc_data = lpc_spectrum(windowed)
+    plt.plot(lpc_data)
     plt.show()
-    axFreq.plot(update(i))
-    

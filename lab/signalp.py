@@ -51,7 +51,7 @@ class signal():
 
     def _load_file(self):
         filepath = os.path.join("./data",self.filename)
-        self.rate, self.data = wf.read(filepath)
+        self.FS, self.data = wf.read(filepath)
 
     def _save_file(self, raw_data):
         filepath = os.path.join("./data",self.filename)
@@ -68,3 +68,5 @@ class signal():
             frames.append(stream.read(self.CHUNK))
 
         return b''.join(frames)
+
+    
